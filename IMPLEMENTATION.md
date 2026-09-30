@@ -34,3 +34,7 @@ Portable 개발 인증은 starter의 seedy@sites.test 모의 계정. 로컬 검�
 OpenAI API key를 서버 secret으로 연결하고 실제 맞춤 대화 검증. 최초 게시된 비공개 사이트의 학생 접근 권한 설정. 교수자는 메일 앱에서 직접 발송. 개인정보 보관 및 삭제 운영은 수업 방침에 맞춰 설정.
 
 공식 API 문서: https://developers.openai.com/api/docs/guides/structured-outputs
+
+## 배포 검증
+
+Sites의 공식 site-workflow.mjs와 package-site.sh를 사용한다. 배포 아카이브의 메타데이터와 마이그레이션은 반드시 dist/.openai/hosting.json 및 dist/.openai/drizzle/에 있어야 한다. 루트 .openai/에만 넣으면 데이터베이스 테이블 생성이 누락될 수 있다. 저장 전에 `node tests/check-artifact.mjs <archive>`로 경로를 검증한다. 배포 성공만으로 기능 정상 동작을 단정하지 않고 데이터베이스 테이블 목록과 실제 튜터 응답을 확인한다.

@@ -1,0 +1,11 @@
+import assert from 'node:assert/strict';
+import { spawnSync } from 'node:child_process';
+import { readdirSync } from 'node:fs';
+const archive=process.argv[2];
+assert.ok(archive,'Provide the deployment archive path.');
+const result=spawnSync('tar',['-tf',archive],{encoding:'utf8'});
+assert.equal(result.status,0,result.stderr);
+const entries=new Set(result.stdout.split(/\r?\n/).map(x=>x.replace(/^\.\//,'')));
+for(const file of ['dist/.openai/hosting.json','dist/server/index.js','dist/.openai/drizzle/meta/_journal.json',...readdirSync('drizzle').filter(x=>x.endsWith('.sql')).map(x=>'dist/.openai/drizzle/'+x)])assert.ok(entries.has(file),`Missing required deployment file: ${file}`);
+assert.ok(![...entries].some(x=>/(^|\/)\.env|(^|\/)\.dev\.vars|(^|\/)\.wrangler\//.test(x)),'Do not package local configuration or databases.');
+console.log('PASS: Worker, hosting configuration and all D1 migrations are present at their deployment paths.');
