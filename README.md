@@ -1,4 +1,42 @@
-# vinext-starter
+# Afterclass · AI Socratic Tutor
+
+감성컴퓨팅 5주차 강의를 바탕으로 개념을 복습하고 교수자에게 질문을 남기는 웹앱입니다.
+
+- 학생: 주제 선택, 준비 질문 또는 AI 대화, 힌트와 학습 정리, 이름·학번·이메일을 포함한 질문 제출
+- 교수자: 인증된 관리자 질문함, 답변 초안, 메일 앱 연결, 발송 확인, 수업 설정과 QR
+- 관리자 계정: 서버의 `ADMIN_EMAIL`로 지정하며 관리자 API에서 검증합니다.
+
+## 서비스와 소스
+
+- 서비스: https://afterclass-socratic-tutor.metaoh.chatgpt.site
+- GitHub: https://github.com/seokhee5hs/afterclass-socratic-tutor
+- 구성: React/TypeScript + Vinext + Cloudflare Workers/D1 기반 Sites 호스팅
+
+GitHub는 소스와 변경 이력을 보관합니다. 서버 API, 데이터베이스와 로그인에 의존하므로 GitHub Pages 정적 배포를 사용하지 않습니다. 현재 GitHub push만으로 Sites에 자동 배포되지 않습니다. Sites 배포 절차는 아래와 `IMPLEMENTATION.md`를 따릅니다.
+
+현재 게시본의 방문 권한은 교수자 전용입니다. 학생들에게 QR을 배포하기 전에 Sites의 방문 권한을 수업 운영에 맞게 설정해야 합니다. 사이트 방문 권한과 관리자 권한은 별도로 적용됩니다.
+
+## 현재 연결 상태
+
+- OpenAI 키가 없으면 **준비 질문 모드**로 동작합니다. 실제 AI 대화는 서버 secret `OPENAI_API_KEY` 연결 후 사용할 수 있습니다.
+- 이메일은 교수자의 메일 앱에서 직접 발송하며, 초안 저장과 발송 확인을 구분합니다.
+- API 키, 로컬 환경 파일, 학생 질문 데이터 및 강의 PDF 원본은 저장소에 포함하지 않습니다.
+
+## 개발과 검증
+
+Node.js 22.13 이상에서 `npm ci`로 의존성을 설치합니다. 환경 설정과 데이터베이스 준비는 `IMPLEMENTATION.md`를 참고하세요.
+
+```sh
+npm run dev
+npx tsc --noEmit
+npm run build
+```
+
+로컬 통합 검증은 `tests/smoke.mjs`, 배포 아카이브 구조 검증은 `tests/check-artifact.mjs`에 있습니다. 상세 운영 메모는 `IMPLEMENTATION.md`에 기록합니다.
+
+---
+
+## Starter 운영 참고
 
 A clean full-stack starter running on [vinext](https://github.com/cloudflare/vinext), with optional Cloudflare D1 and Drizzle support.
 
