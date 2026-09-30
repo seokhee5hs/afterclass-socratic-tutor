@@ -12,7 +12,9 @@
 - GitHub: https://github.com/seokhee5hs/afterclass-socratic-tutor
 - 구성: React/TypeScript + Vinext + Cloudflare Workers/D1 기반 Sites 호스팅
 
-GitHub는 소스와 변경 이력을 보관합니다. 서버 API, 데이터베이스와 로그인에 의존하므로 GitHub Pages 정적 배포를 사용하지 않습니다. 현재 GitHub push만으로 Sites에 자동 배포되지 않습니다. Sites 배포 절차는 아래와 `IMPLEMENTATION.md`를 따릅니다.
+GitHub Pages에는 `pages/`의 독립 복습 화면을 게시합니다. `main` push 시 `.github/workflows/pages.yml`이 강의 주제와 정적 화면을 빌드하여 자동 배포합니다. 준비 질문·힌트·자기 점검은 브라우저에서 실행하며 개인정보나 대화를 전송하거나 저장하지 않습니다. 질문 제출·관리자는 기존 서버 앱 링크로 연결되며, Pages에 서버 기능이 배포되는 것은 아닙니다. GitHub push는 Sites 서버 앱을 자동 갱신하지 않습니다.
+
+Pages 빌드: Node.js 22.18 이상에서 `node scripts/build-pages.mjs`. 미리보기: `node scripts/preview-pages.mjs` 후 `http://127.0.0.1:5190/pages/`. 빌드 결과는 `out/pages/`이며 서버 소스나 환경 파일은 포함하지 않습니다.
 
 현재 게시본의 방문 권한은 교수자 전용입니다. 학생들에게 QR을 배포하기 전에 Sites의 방문 권한을 수업 운영에 맞게 설정해야 합니다. 사이트 방문 권한과 관리자 권한은 별도로 적용됩니다.
 

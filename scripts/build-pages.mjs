@@ -1,0 +1,10 @@
+import { mkdir, copyFile, writeFile, readFile } from 'node:fs/promises';
+import { topics } from '../lib/course.ts';
+const output = new URL('../out/pages/', import.meta.url);
+await mkdir(output, { recursive: true });
+for (const name of ['index.html', 'main.js']) await copyFile(new URL(`../pages/${name}`, import.meta.url), new URL(name, output));
+const css = await readFile(new URL('../app/globals.css', import.meta.url), 'utf8');
+await writeFile(new URL('styles.css', output), css.replace(/@import 'tailwindcss';/, ''));
+await writeFile(new URL('course.js', output), `export const topics = ${JSON.stringify(topics)};\n`);
+await writeFile(new URL('.nojekyll', output), '');
+console.log(`GitHub Pages output: ${output.pathname}`);
